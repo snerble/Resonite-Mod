@@ -1,0 +1,94 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILRepack" Version="2.0.44">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snerble.Utilities\Snerble.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Elements -->
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResoniteBin)\Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Assets">
+      <HintPath>$(ResoniteBin)\Elements.Assets.dll</HintPath>
+    </Reference>
+    
+    <!-- FrooxEngine -->
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResoniteBin)\FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Renderite.Shared">
+      <HintPath>$(ResoniteBin)\Renderite.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Commands">
+      <HintPath>$(ResoniteBin)\FrooxEngine.Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Store">
+      <HintPath>$(ResoniteBin)\FrooxEngine.Store.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Weaver">
+      <HintPath>$(ResoniteBin)\FrooxEngine.Weaver.dll</HintPath>
+    </Reference>
+    
+    <!-- ProtoFlux -->
+    <Reference Include="ProtoFlux.Core">
+      <HintPath>$(ResoniteBin)\ProtoFlux.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.Core">
+      <HintPath>$(ResoniteBin)\ProtoFlux.Nodes.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.FrooxEngine">
+      <HintPath>$(ResoniteBin)\ProtoFlux.Nodes.FrooxEngine.dll</HintPath>
+    </Reference>
+    
+    <!-- Harmony -->
+    <Reference Include="0Harmony">
+      <HintPath>$(ResoniteBin)\rml_libs\0Harmony.dll</HintPath>
+    </Reference>
+
+    <!-- Mod dependencies -->
+    <Reference Include="ResoniteHotReloadLib">
+      <HintPath>$(ResoniteBin)\rml_mods\ResoniteHotReloadLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ResoniteModLoader">
+      <HintPath>$(ResoniteBin)\Libraries\ResoniteModLoader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="RepackInputs">
+    <ItemGroup>
+      <ILRepackInput Include="$(TargetDir)Snerble.Utilities.dll" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="Repack" DependsOnTargets="RepackInputs" AfterTargets="Build">
+    <MakeDir Directories="$(TargetDir)merged" />
+    <Exec Command="&quot;$(ILRepack)&quot; /log /out:merged\$(TargetFileName) $(TargetFileName) @(ILRepackInput->'%(Filename)%(Extension)', ' ')" WorkingDirectory="$(TargetDir)" ConsoleToMSBuild="True" />
+    
+    <ItemGroup>
+      <BuildOutput Include="$(TargetDir)$(TargetName).pdb"/>
+      <BuildOutput Include="$(TargetDir)merged\$(TargetFileName)"/>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyBuildFiles" AfterTargets="Repack">
+    <Copy SourceFiles="@(BuildOutput)" DestinationFolder="$(ResoniteBin)/rml_mods/HotReloadMods" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(BuildOutput)" DestinationFolder="$(ResoniteBin)/rml_mods" SkipUnchangedFiles="true" ContinueOnError="true" />
+  </Target>
+
+</Project>
