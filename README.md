@@ -56,7 +56,7 @@ Besides that checklist from earlier, there are some other things I already have 
 
 - Context shortcuts
   - Defining an `IShortcut` with a single constructor parameter lets me create extra context menu items when holding an object with a compatible type.  
-    For example, I can create a shortcut where I can just spawn a slider for any `IField<float>` that I hold. I can do this by creating a `class SpawnSliderShortcut(IField<float> field) : IShortcut`.
+    For example, if I want a shortcut where I can just spawn a slider for any `IField<float>` that I hold, then I can just write `class SpawnSliderShortcut(IField<float> field) : IShortcut`.
 - Toast popups
   - I found myself wanting a way to let my mod notify the current user without it being clunky or requiring the logs. Thats what the toast popups are for.
     That being said though; I have this nagging feeling like there's already code lying around in Resonite that essentially does the same thing. I haven't found it yet though.
