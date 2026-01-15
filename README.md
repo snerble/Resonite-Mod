@@ -2,9 +2,10 @@
 This is where I spend much of my time trying to make Resonite a tolerable platform.
 
 ## What should this mod even do?
-Right now, its already all over the place. Knowing myself, its gonna contain a bunch of general-purpose utilities that need to be split up into their own mods.
+Not much yet.  
+Right now, the core ideas are all over the place. Knowing myself, its gonna contain a bunch of general-purpose utilities that need to be split up into their own mods.
 
-For now though, I intend for this to become an avatar creation utility. Broad goals are as follows:
+On paper I intend for this to become an avatar creation utility. Broad goals are as follows:
 - [ ] Customize the avatar build process
   - [ ] Non-destructive build pipeline (like VRChat+VRCFury)
   - [ ] Set up dynamic bone chains automatically
