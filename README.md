@@ -60,7 +60,6 @@ Besides that checklist from earlier, there are some other things I already have 
 - Toast popups
   - I found myself wanting a way to let my mod notify the current user without it being clunky or requiring the logs. Thats what the toast popups are for.
     That being said though; I have this nagging feeling like there's already code lying around in Resonite that essentially does the same thing. I haven't found it yet though.
-- 
 
 ---
 
