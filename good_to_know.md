@@ -18,7 +18,7 @@ Using these shorthands also simplifies starting global vs non-global tasks with 
 ### Background tasks
 True async background tasks can be scheduled on the regular .NET thread pool, but Resonite also offers the `StartBackgroundTask` method. The async delegate passed to this method does not yield to the world sync context, but unlike `ConfigureAwait(false)`, awaiting the result of `StartBackgroundTask` will once again yield to the world.
 
-It's important to note that tasks that yield to worlds are not guaranteed to run because the world can be destroyed. Critical cleanup operations must happen outside of a call to `StartTask`.
+It's important to note that tasks that yield to worlds are not guaranteed to run because the world can be destroyed. Critical cleanup operations should probably happen outside of a call to `StartTask`.
 
 ### Coroutines
 The classic way of scheduling units of work on an update loop exists in the form of enumerator-based coroutines. These can be scheduled using the `StartCoroutine` method. One-off delegates can also be scheduled with a delay using the `RunInSeconds` or `RunInUpdates` methods.
@@ -27,7 +27,7 @@ The classic way of scheduling units of work on an update loop exists in the form
 Coroutines can delay their execution by yielding `Context` objects. These can be created from a handful of static constructors, such as `WaitForNextUpdate()`. The `Context.WaitForSeconds` method is equivalent to a `Task.Delay().ConfigureAwait(false)` followed by an `await default(ToWorld)`. Consider using the `Worker.DelaySeconds` method instead of manually using `Task.Delay`
 
 ### Switching contexts
-Coroutines have the unique ability to switch context on the fly. They can switch from background scheduling (using a `WorkProcessor`) to sync scheduling (part of the update queue), or even delayed reattaching using a `Job`.
+Coroutines can switch from background scheduling (using a `WorkProcessor`) to sync scheduling (part of the update queue), or even delayed reattaching using a `Job`. This is done using the `Context` struct.
 
 This behavior also exists for tasks in the form of awaiting `default(ToWorld)` and `default(ToBackground)`. For background tasks its fine to use `Task.Run` or the `StartBackgroundTask`, but `ToBackground` matches the coroutines best in terms of behavior.
 
