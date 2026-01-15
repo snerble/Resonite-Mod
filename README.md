@@ -49,3 +49,19 @@ That should save me a lot of time.
 
 Everything else (especially the Unity assembling part) is cool on paper, but likely extremely time consuming in practice.
 My main priority is creating a tool that does all the things that I don't want to.
+
+## What's it got so far?
+Besides that checklist from earlier, there are some other things I already have finished. These things most definitely distracted me from the main goal, but I can't help myself sometimes.
+
+- Context shortcuts
+  - Defining an `IShortcut` with a single constructor parameter lets me create extra context menu items when holding an object with a compatible type.  
+    For example, I can create a shortcut where I can just spawn a slider for any `IField<float>` that I hold. I can do this by creating a `class SpawnSliderShortcut(IField<float> field) : IShortcut`.
+- Toast popups
+  - I found myself wanting a way to let my mod notify the current user without it being clunky or requiring the logs. Thats what the toast popups are for.
+    That being said though; I have this nagging feeling like there's already code lying around in Resonite that essentially does the same thing. I haven't found it yet though.
+- 
+
+---
+
+I also slapped my utilities project in here. Its basically just a fat toolbox that I drag around from project to project.  
+Yes, I should really use git submodules for this, but using submodules is also clunky so I just keep committing different versions of the utilities project.
