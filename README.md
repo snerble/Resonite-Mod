@@ -60,8 +60,17 @@ Besides that checklist from earlier, there are some other things I already have 
 - Toast popups
   - I found myself wanting a way to let my mod notify the current user without it being clunky or requiring the logs. Thats what the toast popups are for.
     That being said though; I have this nagging feeling like there's already code lying around in Resonite that essentially does the same thing. I haven't found it yet though.
+- Automatic hot reloading
+  - I got sick of clicking a stupid button to reload my mod 600 trillion times. A `FileSystemWatcher` now handles the reloading. The `csproj` handles copying the build files.
 
 ---
 
 I also slapped my utilities project in here. Its basically just a fat toolbox that I drag around from project to project.  
 Yes, I should really use git submodules for this, but using submodules is also clunky so I just keep committing different versions of the utilities project.
+
+## Wanna build it yourself?
+You'll need to fiddle with the `csproj` to let it find the game files.  
+I personally use an environment variable called `%ResoniteBin%` which points to the Resonite install directory. If you don't want to set an environment variable, then you can just replace all occurrences of `$(ResoniteBin)` with the path to your Resonite install folder.  
+Maybe a `Directory.Build.props` file could also work to define the `ResoniteBin` variable, although I've never actually used those.
+
+Also, this project depends on the [Hot Reload](https://github.com/Nytra/ResoniteHotReloadLib) mod.
